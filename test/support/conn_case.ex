@@ -19,15 +19,15 @@ defmodule MiaWeb.ConnCase do
 
   using do
     quote do
-      # The default endpoint for testing
-      @endpoint MiaWeb.Endpoint
-
       use MiaWeb, :verified_routes
 
       # Import conveniences for testing with connections
-      import Plug.Conn
-      import Phoenix.ConnTest
       import MiaWeb.ConnCase
+      import Phoenix.ConnTest
+      import Plug.Conn
+
+      # The default endpoint for testing
+      @endpoint MiaWeb.Endpoint
     end
   end
 

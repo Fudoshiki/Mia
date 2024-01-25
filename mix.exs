@@ -5,7 +5,7 @@ defmodule Mia.MixProject do
     [
       app: :mia,
       version: "0.1.0",
-      elixir: "~> 1.14",
+      elixir: "~> 1.16",
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
@@ -32,17 +32,24 @@ defmodule Mia.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:phoenix, "~> 1.7.10"},
+      {:bandit, ">= 0.0.0"},
+      {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
+      {:dialyxir, "~> 1.4", only: [:dev, :test], runtime: false},
+      {:dns_cluster, "~> 0.1.2"},
+      {:finch, "~> 0.17"},
+      {:floki, ">= 0.35.2", only: :test},
+      {:gettext, "~> 0.24"},
+      {:git_hooks, "~> 0.8.0-pre0", only: [:dev], runtime: false},
+      {:jason, "~> 1.5.0-alpha.2"},
+      {:jason_native, "~> 0.1.0"},
+      {:mix_audit, "~> 2.1", only: [:dev, :test], runtime: false},
+      {:phoenix, github: "phoenixframework/phoenix", override: true},
       {:phoenix_html, "~> 4.0"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
-      {:phoenix_live_view, "~> 0.20.2"},
-      {:floki, ">= 0.30.0", only: :test},
-      {:swoosh, "~> 1.3"},
-      {:finch, "~> 0.13"},
-      {:gettext, "~> 0.20"},
-      {:jason, "~> 1.2"},
-      {:dns_cluster, "~> 0.1.1"},
-      {:bandit, ">= 0.0.0"}
+      {:phoenix_live_view, github: "phoenixframework/phoenix_live_view", override: true},
+      {:sobelow, "~> 0.13", only: [:dev, :test], runtime: false},
+      {:styler, github: "adobe/elixir-styler", only: [:dev, :test], runtime: false},
+      {:swoosh, "~> 1.14"}
     ]
   end
 
@@ -54,7 +61,21 @@ defmodule Mia.MixProject do
   # See the documentation for `Mix` for more info on aliases.
   defp aliases do
     [
-      setup: ["deps.get"]
+      lint: [
+        "deps.get",
+        "hex.audit",
+        "hex.outdated",
+        "deps.audit",
+        "deps.unlock --check-unused",
+        "compile --warnings-as-errors",
+        "format --check-formatted --dry-run",
+        "credo -A",
+        "dialyzer",
+        "sobelow --strict"
+      ],
+      setup: ["cmd rm -rf _build deps", "deps.get"],
+      test: "test",
+      upgrade: ["cmd rm -rf mix.lock", "setup"]
     ]
   end
 end

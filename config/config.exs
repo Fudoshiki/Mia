@@ -7,9 +7,6 @@
 # General application configuration
 import Config
 
-config :mia,
-  generators: [timestamp_type: :utc_datetime]
-
 # Configures the endpoint
 config :mia, MiaWeb.Endpoint,
   url: [host: "localhost"],
