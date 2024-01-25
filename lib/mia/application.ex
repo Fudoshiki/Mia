@@ -8,7 +8,6 @@ defmodule Mia.Application do
   @impl true
   def start(_type, _args) do
     children = [
-      MiaWeb.Telemetry,
       {DNSCluster, query: Application.get_env(:mia, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: Mia.PubSub},
       # Start the Finch HTTP client for sending emails
