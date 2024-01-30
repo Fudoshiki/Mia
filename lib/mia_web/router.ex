@@ -2,28 +2,25 @@ defmodule MiaWeb.Router do
   use MiaWeb, :router
 
   pipeline :browser do
-    plug :accepts, ["html"]
+    plug :accepts, ["html", "swiftui"]
     plug :fetch_session
     plug :fetch_live_flash
-    plug :put_root_layout, html: {MiaWeb.Layouts, :root}
-    plug :protect_from_forgery
-    plug :put_secure_browser_headers
-  end
 
-  pipeline :api do
-    plug :accepts, ["json"]
+    plug :put_root_layout,
+      html: {MiaWeb.Layouts, :root},
+      swiftui: {MiaWeb.LayoutsSwiftUI, :root}
+
+    plug :protect_from_forgery
+    plug :put_secure_browser_headers, %{"content-security-policy" => "default-src 'self'"}
   end
 
   scope "/", MiaWeb do
     pipe_through :browser
 
-    get "/", PageController, :home
+    live_session :root do
+      live "/", HomeLive
+    end
   end
-
-  # Other scopes may use custom stacks.
-  # scope "/api", MiaWeb do
-  #   pipe_through :api
-  # end
 
   # Enable Swoosh mailbox preview in development
   if Application.compile_env(:mia, :dev_routes) do

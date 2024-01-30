@@ -37,19 +37,23 @@ defmodule Mia.MixProject do
       {:dialyxir, "~> 1.4", only: [:dev, :test], runtime: false},
       {:dns_cluster, "~> 0.1.2"},
       {:finch, "~> 0.17"},
-      {:floki, ">= 0.35.2", only: :test},
+      {:floki, ">= 0.35.3", only: :test},
       {:gettext, "~> 0.24"},
       {:git_hooks, "~> 0.8.0-pre0", only: [:dev], runtime: false},
       {:jason, "~> 1.5.0-alpha.2"},
       {:jason_native, "~> 0.1.0"},
+      {:live_view_native, depth: 1, github: "liveview-native/live_view_native", override: true},
+      {:live_view_native_html, depth: 1, github: "liveview-native/live_view_native_html"},
+      {:live_view_native_stylesheet, depth: 1, github: "liveview-native/live_view_native_stylesheet", override: true},
+      {:live_view_native_swiftui, depth: 1, github: "liveview-native/liveview-client-swiftui"},
       {:mix_audit, "~> 2.1", only: [:dev, :test], runtime: false},
-      {:phoenix, github: "phoenixframework/phoenix", override: true},
+      {:phoenix, depth: 1, github: "phoenixframework/phoenix", override: true},
       {:phoenix_html, "~> 4.0"},
-      {:phoenix_live_reload, "~> 1.2", only: :dev},
-      {:phoenix_live_view, github: "phoenixframework/phoenix_live_view", override: true},
+      {:phoenix_live_reload, "~> 1.4", only: :dev},
+      {:phoenix_live_view, depth: 1, github: "phoenixframework/phoenix_live_view", override: true},
       {:sobelow, "~> 0.13", only: [:dev, :test], runtime: false},
-      {:styler, github: "adobe/elixir-styler", only: [:dev, :test], runtime: false},
-      {:swoosh, "~> 1.14"}
+      {:styler, depth: 1, github: "adobe/elixir-styler", only: [:dev, :test], runtime: false},
+      {:swoosh, "~> 1.15"}
     ]
   end
 

@@ -1,5 +1,15 @@
 import Config
 
+config :git_hooks,
+  hooks: [
+    pre_commit: [
+      tasks: [
+        {:mix_task, :lint}
+      ]
+    ]
+  ],
+  verbose: true
+
 # For development, we disable any cache and enable
 # debugging and code reloading.
 #
@@ -45,7 +55,7 @@ config :mia, MiaWeb.Endpoint,
     patterns: [
       ~r"priv/static/(?!uploads/).*(js|css|png|jpeg|jpg|gif|svg)$",
       ~r"priv/gettext/.*(po)$",
-      ~r"lib/mia_web/(controllers|live|components)/.*(ex|heex)$"
+      ~r"lib/mia_web/(controllers|live|components|styles)/.*(ex|heex|neex)$"
     ]
   ]
 
@@ -67,3 +77,8 @@ config :phoenix_live_view, :debug_heex_annotations, true
 
 # Disable swoosh api client as it is only required for production adapters.
 config :swoosh, :api_client, false
+
+# LVN - Optional to enable annotations and pretty printing in dev mode
+config :live_view_native_stylesheet,
+  annotations: true,
+  pretty: true
